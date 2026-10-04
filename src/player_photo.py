@@ -154,7 +154,15 @@ def save_photos(players):
             time.sleep(1)
         players.loc[idx, "photo_url"] = f"{GITHUB_RAW_BASE}/images/players/{name}"
     players.loc[players["player_id"].isna(), "photo_url"] = None
-    # The photos' licences require credit wherever the files are shared (including GitHub).
+
+    no_photo = players["photo_url"].isna()
+    players.loc[no_photo, "photo_url"] = f"{GITHUB_RAW_BASE}/images/placeholder.png"
+    players["photo_caption"] = ("Photo: " + players["photo_credit"].fillna("") + ", "
+                                + players["photo_license"].fillna("")).str.rstrip(", ")
+    players.loc[no_photo, "photo_caption"] = "No photo available"
+    if not (ROOT / "images" / "placeholder.png").exists():
+        print("\nNote: images/placeholder.png is missing - add it so players without a photo show the silhouette.")
+        
     credits = todo.assign(file=[f"{pid}{Path(urllib.parse.urlparse(u).path).suffix.lower() or '.jpg'}"
                                 for pid, u in zip(todo["player_id"], todo["photo_source"])])
     credits[["file", "player", "photo_credit", "photo_license", "photo_page"]].rename(columns={

@@ -10,3 +10,7 @@ __pycache__/
 
 # Mac
 .DS_Store
+
+# Tableau autosave / recovery files
+*.twbr
+.~*
