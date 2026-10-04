@@ -607,7 +607,6 @@
               <approx-count>2</approx-count>
               <contains-null>true</contains-null>
               <collation flag='0' name='LEN_RGB' />
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>finding</remote-name>
@@ -622,7 +621,6 @@
               <approx-count>10</approx-count>
               <contains-null>true</contains-null>
               <collation flag='0' name='LEN_RGB' />
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>category</remote-name>
@@ -637,7 +635,6 @@
               <approx-count>51</approx-count>
               <contains-null>true</contains-null>
               <collation flag='0' name='LEN_RGB' />
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>value</remote-name>
@@ -651,7 +648,6 @@
               <aggregation>Sum</aggregation>
               <approx-count>55</approx-count>
               <contains-null>true</contains-null>
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>interval_low</remote-name>
@@ -665,7 +661,6 @@
               <aggregation>Sum</aggregation>
               <approx-count>38</approx-count>
               <contains-null>true</contains-null>
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>interval_high</remote-name>
@@ -679,7 +674,6 @@
               <aggregation>Sum</aggregation>
               <approx-count>38</approx-count>
               <contains-null>true</contains-null>
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>interval_type</remote-name>
@@ -694,7 +688,6 @@
               <approx-count>3</approx-count>
               <contains-null>true</contains-null>
               <collation flag='0' name='LEN_RGB' />
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>n</remote-name>
@@ -708,7 +701,6 @@
               <aggregation>Sum</aggregation>
               <approx-count>48</approx-count>
               <contains-null>true</contains-null>
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>unit</remote-name>
@@ -723,7 +715,6 @@
               <approx-count>3</approx-count>
               <contains-null>true</contains-null>
               <collation flag='0' name='LEN_RGB' />
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
             <metadata-record class='column'>
               <remote-name>sort_order</remote-name>
@@ -737,7 +728,6 @@
               <aggregation>Sum</aggregation>
               <approx-count>55</approx-count>
               <contains-null>true</contains-null>
-              <object-id>[findings.csv_1A71034B846843DBACB618A1E39590D0]</object-id>
             </metadata-record>
           </metadata-records>
         </connection>
@@ -881,10 +871,11 @@
               <column datatype='string' name='last_name' ordinal='35' />
               <column datatype='string' name='country_name' ordinal='36' />
               <column datatype='string' name='flag_url' ordinal='37' />
-              <column datatype='string' name='photo_url' ordinal='38' />
-              <column datatype='string' name='photo_credit' ordinal='39' />
-              <column datatype='string' name='photo_license' ordinal='40' />
-              <column datatype='string' name='photo_page' ordinal='41' />
+              <column datatype='string' name='photo_source' ordinal='38' />
+              <column datatype='string' name='photo_url' ordinal='39' />
+              <column datatype='string' name='photo_credit' ordinal='40' />
+              <column datatype='string' name='photo_license' ordinal='41' />
+              <column datatype='string' name='photo_page' ordinal='42' />
             </columns>
           </relation>
           <relation connection='textscan.07i77zp0kxyqvm11d6fos1uahgyo' name='player_card.csv' table='[player_card#csv]' type='table'>
@@ -949,6 +940,7 @@
           <map key='[photo_credit]' value='[players.csv].[photo_credit]' />
           <map key='[photo_license]' value='[players.csv].[photo_license]' />
           <map key='[photo_page]' value='[players.csv].[photo_page]' />
+          <map key='[photo_source]' value='[players.csv].[photo_source]' />
           <map key='[photo_url]' value='[players.csv].[photo_url]' />
           <map key='[player (player_card.csv)]' value='[player_card.csv].[player]' />
           <map key='[player (serve_directions.csv)]' value='[serve_directions.csv].[player]' />
@@ -1498,12 +1490,27 @@
             <object-id>[players.csv_E67C414DF264428CB251E570A3351DF4]</object-id>
           </metadata-record>
           <metadata-record class='column'>
+            <remote-name>photo_source</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[photo_source]</local-name>
+            <parent-name>[players.csv]</parent-name>
+            <remote-alias>photo_source</remote-alias>
+            <ordinal>38</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RGB' />
+            <object-id>[players.csv_E67C414DF264428CB251E570A3351DF4]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
             <remote-name>photo_url</remote-name>
             <remote-type>129</remote-type>
             <local-name>[photo_url]</local-name>
             <parent-name>[players.csv]</parent-name>
             <remote-alias>photo_url</remote-alias>
-            <ordinal>38</ordinal>
+            <ordinal>39</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1518,7 +1525,7 @@
             <local-name>[photo_credit]</local-name>
             <parent-name>[players.csv]</parent-name>
             <remote-alias>photo_credit</remote-alias>
-            <ordinal>39</ordinal>
+            <ordinal>40</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1533,7 +1540,7 @@
             <local-name>[photo_license]</local-name>
             <parent-name>[players.csv]</parent-name>
             <remote-alias>photo_license</remote-alias>
-            <ordinal>40</ordinal>
+            <ordinal>41</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1548,7 +1555,7 @@
             <local-name>[photo_page]</local-name>
             <parent-name>[players.csv]</parent-name>
             <remote-alias>photo_page</remote-alias>
-            <ordinal>41</ordinal>
+            <ordinal>42</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1563,7 +1570,7 @@
             <local-name>[player (player_card.csv)]</local-name>
             <parent-name>[player_card.csv]</parent-name>
             <remote-alias>player</remote-alias>
-            <ordinal>42</ordinal>
+            <ordinal>43</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1578,7 +1585,7 @@
             <local-name>[sort_order]</local-name>
             <parent-name>[player_card.csv]</parent-name>
             <remote-alias>sort_order</remote-alias>
-            <ordinal>43</ordinal>
+            <ordinal>44</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
@@ -1590,7 +1597,7 @@
             <local-name>[field]</local-name>
             <parent-name>[player_card.csv]</parent-name>
             <remote-alias>field</remote-alias>
-            <ordinal>44</ordinal>
+            <ordinal>45</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1605,7 +1612,7 @@
             <local-name>[value]</local-name>
             <parent-name>[player_card.csv]</parent-name>
             <remote-alias>value</remote-alias>
-            <ordinal>45</ordinal>
+            <ordinal>46</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1620,7 +1627,7 @@
             <local-name>[player (serve_directions.csv)]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>player</remote-alias>
-            <ordinal>46</ordinal>
+            <ordinal>47</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1635,7 +1642,7 @@
             <local-name>[year]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>year</remote-alias>
-            <ordinal>47</ordinal>
+            <ordinal>48</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
@@ -1647,7 +1654,7 @@
             <local-name>[surface]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>surface</remote-alias>
-            <ordinal>48</ordinal>
+            <ordinal>49</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1662,7 +1669,7 @@
             <local-name>[serve]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>serve</remote-alias>
-            <ordinal>49</ordinal>
+            <ordinal>50</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1677,7 +1684,7 @@
             <local-name>[court]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>court</remote-alias>
-            <ordinal>50</ordinal>
+            <ordinal>51</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1692,7 +1699,7 @@
             <local-name>[situation]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>situation</remote-alias>
-            <ordinal>51</ordinal>
+            <ordinal>52</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1707,7 +1714,7 @@
             <local-name>[direction]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>direction</remote-alias>
-            <ordinal>52</ordinal>
+            <ordinal>53</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <scale>1</scale>
@@ -1722,7 +1729,7 @@
             <local-name>[serves]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>serves</remote-alias>
-            <ordinal>53</ordinal>
+            <ordinal>54</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
@@ -1734,7 +1741,7 @@
             <local-name>[landed]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>landed</remote-alias>
-            <ordinal>54</ordinal>
+            <ordinal>55</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
@@ -1746,7 +1753,7 @@
             <local-name>[won_when_landed]</local-name>
             <parent-name>[serve_directions.csv]</parent-name>
             <remote-alias>won_when_landed</remote-alias>
-            <ordinal>55</ordinal>
+            <ordinal>56</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
@@ -1849,7 +1856,7 @@
       <column-instance column='[Calculation_2302360828424210]' derivation='None' name='[none:Calculation_2302360828424210:nk]' pivot='key' type='nominal' />
       <column-instance column='[direction]' derivation='None' name='[none:direction:nk]' pivot='key' type='nominal' />
       <extract count='-1' enabled='true' object-id='' units='records' user-specific='false'>
-        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='/var/folders/m1/tkf9zbq115jbbfsmrr4w5gv00000gn/T/tableau-temp/#TableauTemp_1xlpdvf1h2e6ef14cmd1c19yl80g.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='10/04/2026 07:06:28 PM' username='tableau_internal_user'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='/var/folders/m1/tkf9zbq115jbbfsmrr4w5gv00000gn/T/tableau-temp/#TableauTemp_19cxjrt1hcdqei102wdx71aub3px.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='10/04/2026 08:15:00 PM' username='tableau_internal_user'>
           <relation type='collection'>
             <relation name='players.csv_E67C414DF264428CB251E570A3351DF4' table='[Extract].[players.csv_E67C414DF264428CB251E570A3351DF4]' type='table' />
             <relation name='player_card.csv_5D2323B5E7B1460FBAB480F24E92729B' table='[Extract].[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B]' type='table' />
@@ -1894,6 +1901,7 @@
             <map key='[photo_credit]' value='[players.csv_E67C414DF264428CB251E570A3351DF4].[photo_credit]' />
             <map key='[photo_license]' value='[players.csv_E67C414DF264428CB251E570A3351DF4].[photo_license]' />
             <map key='[photo_page]' value='[players.csv_E67C414DF264428CB251E570A3351DF4].[photo_page]' />
+            <map key='[photo_source]' value='[players.csv_E67C414DF264428CB251E570A3351DF4].[photo_source]' />
             <map key='[photo_url]' value='[players.csv_E67C414DF264428CB251E570A3351DF4].[photo_url]' />
             <map key='[player (player_card.csv)]' value='[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B].[player]' />
             <map key='[player (serve_directions.csv)]' value='[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6].[player]' />
@@ -2454,12 +2462,27 @@
               <object-id>[players.csv_E67C414DF264428CB251E570A3351DF4]</object-id>
             </metadata-record>
             <metadata-record class='column'>
+              <remote-name>photo_source</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[photo_source]</local-name>
+              <parent-name>[players.csv_E67C414DF264428CB251E570A3351DF4]</parent-name>
+              <remote-alias>photo_source</remote-alias>
+              <ordinal>38</ordinal>
+              <family>players.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>314</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LEN_RGB' />
+              <object-id>[players.csv_E67C414DF264428CB251E570A3351DF4]</object-id>
+            </metadata-record>
+            <metadata-record class='column'>
               <remote-name>photo_url</remote-name>
               <remote-type>129</remote-type>
               <local-name>[photo_url]</local-name>
               <parent-name>[players.csv_E67C414DF264428CB251E570A3351DF4]</parent-name>
               <remote-alias>photo_url</remote-alias>
-              <ordinal>38</ordinal>
+              <ordinal>39</ordinal>
               <family>players.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2474,7 +2497,7 @@
               <local-name>[photo_credit]</local-name>
               <parent-name>[players.csv_E67C414DF264428CB251E570A3351DF4]</parent-name>
               <remote-alias>photo_credit</remote-alias>
-              <ordinal>39</ordinal>
+              <ordinal>40</ordinal>
               <family>players.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2489,7 +2512,7 @@
               <local-name>[photo_license]</local-name>
               <parent-name>[players.csv_E67C414DF264428CB251E570A3351DF4]</parent-name>
               <remote-alias>photo_license</remote-alias>
-              <ordinal>40</ordinal>
+              <ordinal>41</ordinal>
               <family>players.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2504,7 +2527,7 @@
               <local-name>[photo_page]</local-name>
               <parent-name>[players.csv_E67C414DF264428CB251E570A3351DF4]</parent-name>
               <remote-alias>photo_page</remote-alias>
-              <ordinal>41</ordinal>
+              <ordinal>42</ordinal>
               <family>players.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2519,7 +2542,7 @@
               <local-name>[player (player_card.csv)]</local-name>
               <parent-name>[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B]</parent-name>
               <remote-alias>player</remote-alias>
-              <ordinal>42</ordinal>
+              <ordinal>43</ordinal>
               <family>player_card.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2534,7 +2557,7 @@
               <local-name>[sort_order]</local-name>
               <parent-name>[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B]</parent-name>
               <remote-alias>sort_order</remote-alias>
-              <ordinal>43</ordinal>
+              <ordinal>44</ordinal>
               <family>player_card.csv</family>
               <local-type>integer</local-type>
               <aggregation>Sum</aggregation>
@@ -2548,7 +2571,7 @@
               <local-name>[field]</local-name>
               <parent-name>[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B]</parent-name>
               <remote-alias>field</remote-alias>
-              <ordinal>44</ordinal>
+              <ordinal>45</ordinal>
               <family>player_card.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2563,7 +2586,7 @@
               <local-name>[value]</local-name>
               <parent-name>[player_card.csv_5D2323B5E7B1460FBAB480F24E92729B]</parent-name>
               <remote-alias>value</remote-alias>
-              <ordinal>45</ordinal>
+              <ordinal>46</ordinal>
               <family>player_card.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2578,7 +2601,7 @@
               <local-name>[player (serve_directions.csv)]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>player</remote-alias>
-              <ordinal>46</ordinal>
+              <ordinal>47</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2593,7 +2616,7 @@
               <local-name>[year]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>year</remote-alias>
-              <ordinal>47</ordinal>
+              <ordinal>48</ordinal>
               <family>serve_directions.csv</family>
               <local-type>integer</local-type>
               <aggregation>Sum</aggregation>
@@ -2607,7 +2630,7 @@
               <local-name>[surface]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>surface</remote-alias>
-              <ordinal>48</ordinal>
+              <ordinal>49</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2622,7 +2645,7 @@
               <local-name>[serve]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>serve</remote-alias>
-              <ordinal>49</ordinal>
+              <ordinal>50</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2637,7 +2660,7 @@
               <local-name>[court]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>court</remote-alias>
-              <ordinal>50</ordinal>
+              <ordinal>51</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2652,7 +2675,7 @@
               <local-name>[situation]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>situation</remote-alias>
-              <ordinal>51</ordinal>
+              <ordinal>52</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2667,7 +2690,7 @@
               <local-name>[direction]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>direction</remote-alias>
-              <ordinal>52</ordinal>
+              <ordinal>53</ordinal>
               <family>serve_directions.csv</family>
               <local-type>string</local-type>
               <aggregation>Count</aggregation>
@@ -2682,7 +2705,7 @@
               <local-name>[serves]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>serves</remote-alias>
-              <ordinal>53</ordinal>
+              <ordinal>54</ordinal>
               <family>serve_directions.csv</family>
               <local-type>integer</local-type>
               <aggregation>Sum</aggregation>
@@ -2696,7 +2719,7 @@
               <local-name>[landed]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>landed</remote-alias>
-              <ordinal>54</ordinal>
+              <ordinal>55</ordinal>
               <family>serve_directions.csv</family>
               <local-type>integer</local-type>
               <aggregation>Sum</aggregation>
@@ -2710,7 +2733,7 @@
               <local-name>[won_when_landed]</local-name>
               <parent-name>[serve_directions.csv_A574AD91A33B416FA0691C5FE2170AD6]</parent-name>
               <remote-alias>won_when_landed</remote-alias>
-              <ordinal>55</ordinal>
+              <ordinal>56</ordinal>
               <family>serve_directions.csv</family>
               <local-type>integer</local-type>
               <aggregation>Sum</aggregation>
@@ -2721,7 +2744,7 @@
           </metadata-records>
         </connection>
       </extract>
-      <layout common-percentage='0.961074' dim-ordering='alphabetic' measure-ordering='alphabetic' parameter-percentage='0.0389262' show-structure='true' user-set-layout-v2='true' />
+      <layout common-percentage='0.606711' dim-ordering='alphabetic' measure-ordering='alphabetic' parameter-percentage='0.393289' show-structure='true' user-set-layout-v2='true' />
       <style>
         <style-rule element='mark'>
           <encoding attr='color' field='[none:Calculation_1659694812540930:nk]' type='palette'>
@@ -2823,10 +2846,11 @@
                   <column datatype='string' name='last_name' ordinal='35' />
                   <column datatype='string' name='country_name' ordinal='36' />
                   <column datatype='string' name='flag_url' ordinal='37' />
-                  <column datatype='string' name='photo_url' ordinal='38' />
-                  <column datatype='string' name='photo_credit' ordinal='39' />
-                  <column datatype='string' name='photo_license' ordinal='40' />
-                  <column datatype='string' name='photo_page' ordinal='41' />
+                  <column datatype='string' name='photo_source' ordinal='38' />
+                  <column datatype='string' name='photo_url' ordinal='39' />
+                  <column datatype='string' name='photo_credit' ordinal='40' />
+                  <column datatype='string' name='photo_license' ordinal='41' />
+                  <column datatype='string' name='photo_page' ordinal='42' />
                 </columns>
               </relation>
             </properties>
@@ -2887,7 +2911,7 @@
         <column caption='Player' datatype='string' name='[player]' role='dimension' type='nominal' />
       </datasource-dependencies>
       <filter class='categorical' column='[federated.06se0je1n4z15g1ed6zxt159hm93].[none:player:nk]'>
-        <groupfilter function='member' level='[none:player:nk]' member='&quot;Anna Karolina Schmiedlova&quot;' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+        <groupfilter function='member' level='[none:player:nk]' member='&quot;Amanda Anisimova&quot;' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
       </filter>
     </shared-view>
   </shared-views>
@@ -3192,11 +3216,14 @@
           <datasource-dependencies datasource='federated.06se0je1n4z15g1ed6zxt159hm93'>
             <column caption='Field' datatype='string' name='[field]' role='dimension' type='nominal' />
             <column caption='In Charting Data' datatype='boolean' name='[in_charting_data]' role='dimension' type='nominal' />
+            <column-instance column='[sort_order]' derivation='Min' name='[min:sort_order:qk]' pivot='key' type='quantitative' />
             <column-instance column='[field]' derivation='None' name='[none:field:nk]' pivot='key' type='nominal' />
             <column-instance column='[in_charting_data]' derivation='None' name='[none:in_charting_data:nk]' pivot='key' type='nominal' />
             <column-instance column='[player]' derivation='None' name='[none:player:nk]' pivot='key' type='nominal' />
             <column caption='Player' datatype='string' name='[player]' role='dimension' type='nominal' />
+            <column caption='Sort Order' datatype='integer' name='[sort_order]' role='measure' type='quantitative' />
           </datasource-dependencies>
+          <computed-sort column='[federated.06se0je1n4z15g1ed6zxt159hm93].[none:field:nk]' direction='ASC' using='[federated.06se0je1n4z15g1ed6zxt159hm93].[min:sort_order:qk]' />
           <filter class='categorical' column='[federated.06se0je1n4z15g1ed6zxt159hm93].[none:in_charting_data:nk]'>
             <groupfilter function='member' level='[none:in_charting_data:nk]' member='true' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
@@ -6341,22 +6368,18 @@
       <zones>
         <zone h='100000' id='2' type-v2='layout-basic' w='100000' x='0' y='0'>
           <zone h='98034' id='44' param='horz' type-v2='layout-flow' w='98296' x='852' y='983'>
-            <zone h='98034' id='40' param='horz' type-v2='layout-flow' w='98296' x='852' y='983'>
-              <zone h='98034' id='26' param='horz' type-v2='layout-flow' w='98296' x='852' y='983'>
-                <zone h='98034' id='4' type-v2='layout-basic' w='98296' x='852' y='983'>
-                  <zone h='98034' id='1' type-v2='empty' w='98296' x='852' y='983'>
-                    <zone-style>
-                      <format attr='border-color' value='#000000' />
-                      <format attr='border-style' value='none' />
-                      <format attr='border-width' value='0' />
-                      <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius' value='0' />
-                      <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius-top-left' value='7' />
-                      <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius-top-right' value='0' />
-                      <format attr='margin' value='0' />
-                      <format attr='background-color' value='#0a0a16' />
-                    </zone-style>
-                  </zone>
-                </zone>
+            <zone h='98034' id='4' type-v2='layout-basic' w='98296' x='852' y='983'>
+              <zone h='98034' id='1' type-v2='empty' w='98296' x='852' y='983'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius' value='0' />
+                  <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius-top-left' value='7' />
+                  <_.fcp.DashboardRoundedCorners.true...format attr='corner-radius-top-right' value='0' />
+                  <format attr='margin' value='0' />
+                  <format attr='background-color' value='#0a0a16' />
+                </zone-style>
               </zone>
             </zone>
           </zone>
@@ -6552,7 +6575,7 @@
             <format attr='background-color' value='#121429' />
           </zone-style>
         </zone>
-        <zone forceUpdate='true' h='7002' id='46' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/17443244.png' type-v2='bitmap' w='6603' x='69862' y='58722' />
+        <zone h='7002' id='46' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/17443244.png' type-v2='bitmap' w='6603' x='69862' y='58722' />
         <zone forceUpdate='true' h='15848' id='47' type-v2='text' w='26092' x='69862' y='77396'>
           <formatted-text>
             <run bold='true' fontalignment='1' fontcolor='#e6e6e6' fontsize='10'>This highlights how important break points are in sets, even though players still hold serve most of the time</run>
@@ -6811,7 +6834,7 @@
         </zone>
         <zone h='6265' id='40' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/toppng.com-urple-circle-light-purple-circle-600x600.png' type-v2='bitmap' w='5431' x='4579' y='86609' />
         <zone h='5283' id='41' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/icone-de-lettre-d-information-i-violet.png' type-v2='bitmap' w='3940' x='5218' y='87469' />
-        <zone forceUpdate='true' h='6388' id='42' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/2532603.png' type-v2='bitmap' w='5964' x='72950' y='34152' />
+        <zone h='6388' id='42' is-centered='0' is-scaled='1' param='/Users/thandovelempini/Downloads/2532603.png' type-v2='bitmap' w='5964' x='72950' y='34152' />
         <zone forceUpdate='true' h='10319' id='43' type-v2='text' w='23536' x='71672' y='53317'>
           <formatted-text>
             <run bold='true' fontcolor='#ffffff' fontsize='12'>Estimated effect</run>
@@ -7978,7 +8001,7 @@
       </device-preview>
       <simple-id uuid='{B326995D-58BF-41D5-982E-976FB68007D4}' />
     </window>
-    <window class='worksheet' name='Card Photo'>
+    <window class='worksheet' maximized='true' name='Card Photo'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -8062,7 +8085,7 @@
       </cards>
       <simple-id uuid='{B00E5D6C-FB51-43A7-94C0-A815C3C02D49}' />
     </window>
-    <window class='worksheet' maximized='true' name='Card Details'>
+    <window class='worksheet' name='Card Details'>
       <cards>
         <edge name='left'>
           <strip size='160'>
