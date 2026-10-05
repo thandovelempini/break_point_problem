@@ -212,6 +212,63 @@ def build_findings():
 
 
 
+# 5. Score grid (heat map)
+
+SCORE_NAMES = ["0", "15", "30", "40"]
+SCORE_ORDER = {"0": 0, "15": 1, "30": 2, "40": 3, "AD": 4}
+
+
+def score_label(srv, ret):
+    # points won before this point -> ("30", "40"); every deuce counts as 40-40
+    if srv >= 3 and ret >= 3:
+        return ("40", "40") if srv == ret else (("AD", "40") if srv > ret else ("40", "AD"))
+    return SCORE_NAMES[min(srv, 3)], SCORE_NAMES[min(ret, 3)]
+
+
+def build_score_grid():
+    # One row per score per surface: how often the server wins the next point,
+    # and how often she holds the game from there. Tiebreaks left out.
+    pts = pd.read_csv(DATA / "slam_points_wta.csv",
+                      usecols=["match_id", "set_no", "game_no", "point_no", "server_won_point", "is_tiebreak"])
+    pts = pts[~pts["is_tiebreak"]].sort_values(["match_id", "set_no", "game_no", "point_no"])
+    games = pd.read_csv(DATA / "slam_games_wta.csv", usecols=["match_id", "set_no", "game_no", "held"])
+    games = games.dropna(subset=["held"])                       # tiebreak games have no "held"
+    games["held"] = games["held"].astype(str).eq("True")
+    surface = pd.read_csv(DATA / "slam_matches_wta.csv", usecols=["match_id", "surface"])
+
+    won = pts["server_won_point"].astype(int)
+    keys = [pts["match_id"], pts["set_no"], pts["game_no"]]
+    srv = won.groupby(keys).cumsum() - won                 # server points won BEFORE this point
+    ret = (1 - won).groupby(keys).cumsum() - (1 - won)     # returner points won before this point
+    labels = [score_label(a, b) for a, b in zip(srv.to_numpy(), ret.to_numpy())]
+    pts["server_score"] = [a for a, _ in labels]
+    pts["returner_score"] = [b for _, b in labels]
+    pts = (pts.merge(games, on=["match_id", "set_no", "game_no"], how="inner")
+              .merge(surface, on="match_id", how="left"))
+    pts = pd.concat([pts, pts.assign(surface="All surfaces")], ignore_index=True)
+
+    cell = ["surface", "server_score", "returner_score"]
+    t = pts.groupby(cell).agg(points=("server_won_point", "size"),
+                              points_won=("server_won_point", "sum")).reset_index()
+    reached = pts.drop_duplicates(cell + ["match_id", "set_no", "game_no"])
+    hold = reached.groupby(cell)["held"].agg(games_reached="size", games_held="sum").reset_index()
+    t = t.merge(hold, on=cell)
+
+    t["point_win_rate"] = t["points_won"] / t["points"]
+    t["point_win_ci_low"], t["point_win_ci_high"] = wilson(t["points_won"], t["points"])
+    t["hold_rate"] = t["games_held"] / t["games_reached"]
+    t["hold_ci_low"], t["hold_ci_high"] = wilson(t["games_held"], t["games_reached"])
+    t["server_order"] = t["server_score"].map(SCORE_ORDER)
+    t["returner_order"] = t["returner_score"].map(SCORE_ORDER)
+    t["score"] = t["server_score"] + "-" + t["returner_score"]
+    t["is_break_point"] = (((t["returner_score"] == "40") & (t["server_order"] < 3))
+                           | (t["returner_score"] == "AD"))
+    front = ["surface", "score", "server_score", "returner_score", "server_order", "returner_order", "is_break_point"]
+    return t[front + [c for c in t.columns if c not in front]].sort_values(
+        ["surface", "server_order", "returner_order"]).reset_index(drop=True)
+
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     print("Loading...")
@@ -223,11 +280,13 @@ def main():
     card = build_player_card(players)
     directions = build_serve_directions(serves)
     findings = build_findings()
+    grid = build_score_grid()
 
     players.to_csv(OUT / "players.csv", index=False)
     directions.to_csv(OUT / "serve_directions.csv", index=False)
     findings.to_csv(OUT / "findings.csv", index=False)
     card.to_csv(OUT / "player_card.csv", index=False)
+    grid.to_csv(OUT / "score_grid.csv", index=False)
 
     print(f"players.csv           {len(players):>7,} rows  ({players['in_slam_data'].sum()} in Slam data, "
           f"{players['in_charting_data'].sum()} in charting data, "
@@ -235,6 +294,7 @@ def main():
     print(f"serve_directions.csv  {len(directions):>7,} rows  ({directions['serves'].sum():,} serves)")
     print(f"findings.csv          {len(findings):>7,} rows")
     print(f"player_card.csv       {len(card):>7,} rows  (bio lines for {card['player'].nunique()} players)")
+    print(f"score_grid.csv        {len(grid):>7,} rows  (18 scores x {grid['surface'].nunique()} surface options, for the heat map)")
     print(f"\nFiles written to {OUT}")
 
 
