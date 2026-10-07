@@ -145,6 +145,8 @@ def build_player_card(players):
             add(4, "Career-high ranking", f"#{int(best.loc[pid, 'rank'])} ({nice_date(best.loc[pid, 'ranking_date'], day=False)})")
         if pid in latest.index:
             add(5, "Latest ranking", f"#{int(latest.loc[pid])} ({nice_date(latest_date)})")
+        if pd.notna(p.get("hold_rate")) and p.get("service_games", 0) > 0:
+            add(6, "Career hold rate", f"{p['hold_rate']:.1%} ({int(p['service_games']):,} Slam service games)")
     return pd.DataFrame(rows, columns=["player", "sort_order", "field", "value"])
 
 
@@ -269,6 +271,71 @@ def build_score_grid():
 
 
 
+# 6. Player splits (every player's numbers for each surface and year)
+
+def binary_entropy(p):
+    """Entropy in bits of a two-way split (wide vs T): 0 = always one side, 1 = perfectly even."""
+    p = np.clip(p, 1e-12, 1 - 1e-12)
+    return -(p * np.log2(p) + (1 - p) * np.log2(1 - p))
+
+
+def build_player_splits(players, serves):
+    """One row per player x surface choice x year choice, where each choice can be "All".
+    Pre-calculated here because rates and entropy can't simply be added up in Tableau.
+    Charting numbers cover every year charted; Slam hold rates only 2011-2024."""
+    names = players.assign(k=players["player"].map(key)).drop_duplicates("k").set_index("k")["player"]
+
+    def expand(df):
+        """Copy the rows so each one also counts towards 'All surfaces' / 'All years'."""
+        df = df.assign(surface_choice=df["surface"], year_choice=df["year"].astype("Int64").astype(str))
+        return pd.concat([df,
+                          df.assign(surface_choice="All"),
+                          df.assign(year_choice="All"),
+                          df.assign(surface_choice="All", year_choice="All")], ignore_index=True)
+
+    keys = ["player", "surface_choice", "year_choice"]
+
+    # --- Charting serves -----------------------------------------------------
+    s = serves.assign(player=serves["server"].map(key).map(names)).dropna(subset=["player"])
+    s = expand(s)
+    s = s[s["surface_choice"] != "Unknown"]
+    first = s[s["serve_number"] == 1]
+    g = first.groupby(keys)
+    t = pd.DataFrame({
+        "first_serves": g.size(),
+        "first_wide": g["direction"].apply(lambda d: (d == "wide").mean()),
+        "first_body": g["direction"].apply(lambda d: (d == "body").mean()),
+        "first_t": g["direction"].apply(lambda d: (d == "T").mean()),
+        "serve_points_won": g["server_won_point"].mean(),
+    })
+    landed = first[~first["fault"]].groupby(keys)["server_won_point"].mean().rename("first_serve_points_won")
+    t = t.join(landed)
+
+    # Wide-vs-T mix, measured within each court and weighted by serves (as in Part 2).
+    wt = first[first["direction"] != "body"]
+    court = wt.groupby(keys + ["court"])["direction"].agg(n="size", t_share=lambda d: (d == "T").mean()).reset_index()
+    court["h"] = binary_entropy(court["t_share"])
+    court["hn"] = court["h"] * court["n"]
+    mix = court.groupby(keys)[["hn", "n"]].sum()
+    t = t.join((mix["hn"] / mix["n"]).rename("wide_t_mix"))
+
+    # --- Slam service games ----------------------------------------------------
+    games = pd.read_csv(DATA / "slam_games_wta.csv", usecols=["match_id", "server", "held"])
+    games = games.dropna(subset=["held"])
+    games["held"] = games["held"].astype(str).eq("True")
+    games = games.merge(pd.read_csv(DATA / "slam_matches_wta.csv", usecols=["match_id", "year", "surface"]),
+                        on="match_id")
+    games = games.assign(player=games["server"].map(key).map(names)).dropna(subset=["player"])
+    h = expand(games).groupby(keys)["held"].agg(service_games="size", holds="sum")
+    h["hold_rate"] = h["holds"] / h["service_games"]
+
+    out = t.join(h, how="outer").reset_index()
+    for col in ["first_serves", "service_games", "holds"]:
+        out[col] = out[col].fillna(0).astype(int)
+    return out.sort_values(keys).reset_index(drop=True)
+
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     print("Loading...")
@@ -281,12 +348,14 @@ def main():
     directions = build_serve_directions(serves)
     findings = build_findings()
     grid = build_score_grid()
+    splits = build_player_splits(players, serves)
 
     players.to_csv(OUT / "players.csv", index=False)
     directions.to_csv(OUT / "serve_directions.csv", index=False)
     findings.to_csv(OUT / "findings.csv", index=False)
     card.to_csv(OUT / "player_card.csv", index=False)
     grid.to_csv(OUT / "score_grid.csv", index=False)
+    splits.to_csv(OUT / "player_splits.csv", index=False)
 
     print(f"players.csv           {len(players):>7,} rows  ({players['in_slam_data'].sum()} in Slam data, "
           f"{players['in_charting_data'].sum()} in charting data, "
@@ -295,6 +364,7 @@ def main():
     print(f"findings.csv          {len(findings):>7,} rows")
     print(f"player_card.csv       {len(card):>7,} rows  (bio lines for {card['player'].nunique()} players)")
     print(f"score_grid.csv        {len(grid):>7,} rows  (18 scores x {grid['surface'].nunique()} surface options, for the heat map)")
+    print(f"player_splits.csv     {len(splits):>7,} rows  (each player by surface and year, for the Player Explorer)")
     print(f"\nFiles written to {OUT}")
 
 
