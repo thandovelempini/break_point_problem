@@ -1,16 +1,11 @@
-# Large data: rebuild with the scripts (see README)
 data/
 
-# Tableau extract files (large, rebuilt when publishing)
 *.hyper
 
-# Python
 __pycache__/
 .venv/
 
-# Mac
 .DS_Store
 
-# Tableau autosave / recovery files
 *.twbr
 .~*
