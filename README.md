@@ -59,3 +59,9 @@ AI tools were used to support the development of this project through:
 - Improving project documentation and organisation
 
 The data processing, statistical analysis, modelling, visualisation and final project decisions were carried out and reviewed by me.
+
+## Licence
+
+The code in this repository is licensed under the MIT Licence. See the [LICENSE](LICENSE) file for details.
+
+Third-party datasets, images and other external resources remain subject to their respective licences and usage terms.
